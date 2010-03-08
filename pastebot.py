@@ -42,9 +42,11 @@ class PasteBot:
     # Connection information
     network = 'irc.freenode.net'
     port = 6667
+    network_pass = ''
     channels = ['#keryx']
     nick = 'Elmer'
     name = 'Elmer'
+    nick_pass = ''
 
     pastes = {}
 
@@ -59,7 +61,8 @@ class PasteBot:
         # Create a server object, connect and join the channel
         self.server = self.irc.server()
         self.server.connect(self.network, self.port, 
-                            self.nick, ircname=self.name)
+                            self.nick, ircname=self.name, password=self.network_pass)
+        self.server.privmsg("nickserv", "identify %s" % self.nick_pass)
         for channel in self.channels:
             self.server.join(channel)
 
